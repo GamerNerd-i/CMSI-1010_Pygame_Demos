@@ -1,6 +1,6 @@
 # Pygame Basics
 
-This is a very brief walkthrough of [how to set up the Pygame library](Installation), and a [list of resources](Resources) that you might find useful for using Pygame to make things.
+This is a very brief walkthrough of [how to set up the Pygame library](#installation), and a [list of resources](#resources) that you might find useful for using Pygame to make things.
 
 ## Important Concepts
 
