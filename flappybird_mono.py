@@ -5,8 +5,8 @@ import pygame.draw as Draw
 import pygame.font as font
 import random
 
-GRAVITY = 0.2
-GAME_SPEED = 2
+GRAVITY = 0.3
+GAME_SPEED = 1
 
 MAX_PIPES = 4
 PIPE_Y_BUFFER = 10
@@ -61,12 +61,12 @@ class Pipe:
 class Bird:
     def __init__(self):
         self.radius = BIRD_SIZE // 2
-        self.flap_size = 5
+        self.flap_size = 4
         self.speed = 0
         self.x, self.y = WIDTH // 3, HEIGHT // 2
         self.alive = True
         self.hitbox = rect.Rect(
-            (self.x - (self.radius * 0.8), self.y - (self.radius * 0.78)),
+            (self.x - (self.radius * 0.8), self.y - (self.radius * 0.8)),
             (BIRD_SIZE * 0.8, BIRD_SIZE * 0.8),
         )
 
@@ -76,7 +76,7 @@ class Bird:
 
     def move(self):
         self.y += self.speed
-        self.hitbox.y += self.speed
+        self.hitbox.y = self.y - (self.radius * 0.8)
         self.speed += GRAVITY
 
         self.out_of_bounds()
@@ -99,7 +99,6 @@ bird_x = screen.get_width() / 3
 player = Bird()
 pipes = []
 pipe_gap = 2.5
-
 
 for pipe_num in range(MAX_PIPES):
     new_pipe = Pipe()
@@ -152,6 +151,21 @@ while running:
         screen.blit(score_text, (WIDTH // 20, HEIGHT // 20))
     else:
         screen.blits(game_over_text)
+
+        if pygame.key.get_pressed()[pygame.K_SPACE]:
+            bird_y = screen.get_height() / 2
+            bird_x = screen.get_width() // 3
+
+            player = Bird()
+            pipes = []
+            pipe_gap = 2.5
+
+            for pipe_num in range(MAX_PIPES):
+                new_pipe = Pipe()
+                new_pipe.move(new_pipe.width * pipe_gap * pipe_num)
+                pipes.append(new_pipe)
+
+            score = 0
 
     Display.flip()
     clock.tick(60)
